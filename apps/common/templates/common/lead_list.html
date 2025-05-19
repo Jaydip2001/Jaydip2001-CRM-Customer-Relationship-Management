@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
+        <h1 class="h3 custom-title">Leads</h1>
+    </div>
+        <a href="{% url 'lead_create' %}" class="btn add-lead-btn"> + Add Lead</a>
+        <br/><br/>
+        <a href="{% url 'export_leads' %}" class="btn btn-success">Download Leads (Excel)</a>
+        <br/><br/>
+
+
+    <div class="card shadow-sm p-4 rounded-lg">
+        <div class="table-responsive">
+            <table class="table custom-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for lead in leads %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ lead.name }}</td>
+                        <td>{{ lead.email }}</td>
+                        <td>{{ lead.phone }}</td>
+                        <td>{{ lead.status }}</td>
+                        <td>
+                            <a href="{% url 'lead_edit' lead.pk %}" class="btn edit-btn">Edit</a>
+                            <form action="{% url 'lead_delete' lead.pk %}" method="post" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn delete-btn">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted">No leads found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Custom Styling -->
+<style>
+    /* Import Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+    /* Page Title */
+    .custom-title {
+        font-weight: 600;
+        color: #2c3e50;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    /* Add Lead Button */
+    .add-lead-btn {
+        background: #007bff;
+        color: white;
+        padding: 10px 20px;
+        font-weight: 500;
+        border-radius: 8px;
+        transition: all 0.3s ease-in-out;
+        text-decoration: none;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .add-lead-btn:hover {
+        background: #0056b3;
+        transform: translateY(-2px);
+    }
+
+    /* Table Styling */
+    .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: 'Roboto', sans-serif;
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .custom-table thead {
+        background: #498496;
+        color: white;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+    .custom-table th, .custom-table td {
+        padding: 12px;
+        text-align: left;
+    }
+
+    .custom-table tbody tr {
+        transition: background 0.3s ease-in-out;
+    }
+
+    .custom-table tbody tr:hover {
+        background: #f1f1f1;
+    }
+
+    /* Card Styling */
+    .card {
+        border-radius: 15px;
+        border: none;
+        background: #ffffff;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Action Buttons */
+    .edit-btn {
+        background: #f39c12;
+        color: white;
+        padding: 6px 12px;
+        font-size: 14px;
+        border-radius: 5px;
+        transition: all 0.3s ease-in-out;
+        text-decoration: none;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .edit-btn:hover {
+        background: #e67e22;
+        transform: scale(1.05);
+    }
+
+    .delete-btn {
+        background: #e74c3c;
+        color: white;
+        padding: 6px 12px;
+        font-size: 14px;
+        border-radius: 5px;
+        border: none;
+        transition: all 0.3s ease-in-out;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .delete-btn:hover {
+        background: #c0392b;
+        transform: scale(1.05);
+    }
+</style>
+
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
+        <h1 class="h3 custom-title">{% if form.instance.pk %}Edit{% else %}Add{% endif %} Client</h1>
+    </div>
+    <div class="card p-4 custom-card">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.as_p }}
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn save-btn">Save</button>
+                <a href="{% url 'client_list' %}" class="btn cancel-btn">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Custom Styling -->
+<style>
+    .custom-title {
+        font-weight: 600;
+        color: #333;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .custom-card {
+        background: #fff;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    /* Input field design */
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 15px;
+        margin-top: 10px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        background-color: #f9f9f9;
+        font-family: 'Roboto', sans-serif;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    /* On focus, change border color and add shadow */
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        border-color: #6c63ff;
+        box-shadow: 0 0 5px rgba(108, 99, 255, 0.4);
+        outline: none;
+    }
+
+    /* Button Styling */
+    .save-btn {
+        background-color: #28a745;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 50px;
+        font-weight: 600;
+        border: none;
+        font-family: 'Poppins', sans-serif;
+        transition: all 0.3s ease;
+    }
+
+    .save-btn:hover {
+        background-color: #218838;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(40, 167, 69, 0.2);
+    }
+
+    .cancel-btn {
+        background-color: #6c757d;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 50px;
+        text-decoration: none;
+        border: none;
+        font-weight: 600;
+        font-family: 'Poppins', sans-serif;
+        transition: all 0.3s ease;
+    }
+
+    .cancel-btn:hover {
+        background-color: #5a6268;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(108, 117, 125, 0.2);
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: space-between;
+    }
+</style>
+
+{% endblock %}

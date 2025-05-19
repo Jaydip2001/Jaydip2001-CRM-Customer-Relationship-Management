@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Create Product</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+        {{ form.as_p }}
+    </div>
+    <div class="form-actions">
+        <button type="submit" class="btn save-btn">Save</button>
+      <a href="{% url 'product_list' %}">Back to Product List</a>
+    </div>
+  </form>
+  </div>
+  
+
+<!-- Custom Stylish CSS -->
+<style>
+    /* General Styles */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f7fc;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+  
+    h1 {
+        font-size: 28px;
+        text-align: center;
+        margin-bottom: 30px;
+        font-weight: 700;
+        color: #4a4a4a;
+    }
+  
+    .form-group {
+        margin-bottom: 20px;
+    }
+  
+    /* Form container */
+    form {
+        max-width: 600px;
+        margin: 40px auto;
+        padding: 30px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+  
+    /* Form input fields */
+    .form-group input, 
+    .form-group textarea, 
+    .form-group select {
+        width: 100%;
+        padding: 12px 18px;
+        margin: 10px 0;
+        border-radius: 8px;
+        border: 1px solid #dcdfe6;
+        font-size: 16px;
+        background-color: #f9f9f9;
+        transition: border-color 0.3s ease;
+    }
+  
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+        border-color: #007bff;
+        background-color: #fff;
+        outline: none;
+    }
+  
+    .form-group label {
+        font-size: 16px;
+        font-weight: 600;
+        color: #5f6368;
+        margin-bottom: 8px;
+    }
+  
+    /* Submit Button */
+    button {
+        width: 100%;
+        padding: 12px;
+        font-size: 18px;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+  
+    button:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+    }
+  
+    button:active {
+        background-color: #003d7a;
+        transform: translateY(0);
+    }
+  
+    /* Stylish Link */
+    a {
+        display: inline-block;
+        margin-top: 20px;
+        color: #007bff;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+  
+    a:hover {
+        color: #0056b3;
+        text-decoration: underline;
+    }
+  
+    /* Mobile Responsiveness */
+    @media (max-width: 600px) {
+        form {
+            padding: 20px;
+        }
+  
+        button {
+            font-size: 16px;
+            padding: 12px;
+        }
+  
+        h1 {
+            font-size: 24px;
+        }
+    }
+  </style>
+
+{% endblock %}

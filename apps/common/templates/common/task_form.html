@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h1 class="form-title">{% if form.instance.pk %}Edit Task{% else %}Create Task{% endif %}</h1>
+
+    <form method="post" class="task-form">
+        {% csrf_token %}
+        
+        <!--Client name-->
+        <div>
+            <label for="{{ form.client.id_for_label }}">Client</label>
+            {{ form.client }}
+        </div>
+
+        <!-- Task Number Field -->
+        <div class="form-group">
+            <label for="id_task_id" class="form-label">Task ID</label>
+            {{ form.task_id }}
+        </div>
+
+        <!-- Task Name Field -->
+        <div class="form-group">
+            <label for="id_task_name" class="form-label">Task Name</label>
+            {{ form.task_name }}
+        </div>
+
+        <!-- Date Issued Field -->
+        <div class="form-group">
+            <label for="id_date_issued" class="form-label">Date Issued</label>
+            {{ form.date_issued }}
+        </div>
+
+        <!-- Due Date Field -->
+        <div class="form-group">
+            <label for="id_due_date" class="form-label">Due Date</label>
+            {{ form.due_date }}
+        </div>
+
+        <!--Status-->
+        <div>
+            <label for="{{ form.status.id_for_label }}">Status</label>
+            {{ form.status }}
+        </div>
+
+        <!-- Submit, Reset and Back Buttons -->
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                {% if form.instance.pk %}Save Changes{% else %}Create Task{% endif %}
+            </button>
+            <button type="reset" class="btn btn-secondary">Reset</button>
+            <a href="{% url 'task_list' %}" class="btn btn-back">Back</a>
+        </div>
+    </form>
+</div>
+
+
+
+{% block extra_js %}
+    <!-- Include jQuery UI JS -->
+    <script src="{% static 'date-time-phone/jquery-ui.js' %}"></script>
+
+    <!-- Include jQuery UI Timepicker Addon JS (if needed) -->
+    <script src="{% static 'date-time-phone/jquery-ui-timepicker-addon.js' %}"></script>
+
+    <script>
+        // Initialize datepicker for 'date_issued' and 'due_date' fields
+        $(function() {
+            // Apply datepicker to 'date_issued'
+            $("#id_date_issued").datepicker({ 
+                dateFormat: 'yy-mm-dd',   // Format the date as YYYY-MM-DD
+                minDate: 0,               // Disable past dates, only allow today or future dates
+                controlType: 'select',    // Use the 'select' control for picking the date (optional)
+                changeMonth: true,        // Enable month dropdown
+                changeYear: true          // Enable year dropdown
+            }).attr("autocomplete", "off");
+
+            // Apply datepicker to 'due_date'
+            $("#id_due_date").datepicker({ 
+                dateFormat: 'yy-mm-dd',   // Format the date as YYYY-MM-DD
+                minDate: 0,               // Disable past dates, only allow today or future dates
+                controlType: 'select',    // Use the 'select' control for picking the date (optional)
+                changeMonth: true,        // Enable month dropdown
+                changeYear: true          // Enable year dropdown
+            }).attr("autocomplete", "off");
+        });
+    </script>
+{% endblock %}
+
+<!-- Custom Styling -->
+<style>
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-title {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 30px;
+        color: #333;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .task-form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+    }
+
+    .form-label {
+        font-size: 16px;
+        color: #555;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .form-control {
+        padding: 12px 15px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+        color: #333;
+        transition: border-color 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #007bff;
+        outline: none;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+        font-weight: 600;
+        border: none;
+        border-radius: 8px;
+        padding: 12px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+        background-color: #f0f0f0;
+        color: #555;
+        font-weight: 600;
+        border: none;
+        border-radius: 8px;
+        padding: 12px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+        background-color: #d6d6d6;
+        transform: translateY(-2px);
+    }
+
+    .btn-back {
+        background-color: #f8f9fa;
+        color: #007bff;
+        font-weight: 600;
+        border: none;
+        border-radius: 8px;
+        padding: 12px 20px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        display: inline-block;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .btn-back:hover {
+        background-color: #e2e6ea;
+        transform: translateY(-2px);
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+    }
+</style>
+{% endblock %}
