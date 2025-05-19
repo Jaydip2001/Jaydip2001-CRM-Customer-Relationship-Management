@@ -1,0 +1,139 @@
+body {
+    font-family: 'Nunito', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: #0056b3;
+    color: white;
+    position: fixed;
+    left: 0; /* Make sure sidebar stays at the left */
+    top: 0;
+    transition: width 0.3s ease-in-out;
+    overflow: hidden; 
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Ensures space between name and toggle button */
+    padding: 15px;
+    background: #01356d;
+}
+
+.profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.username {
+    font-weight: bold;
+    transition: opacity 0.3s ease-in-out;
+    font-family: 'Nunito', sans-serif;  /* Apply the Google Font */
+    font-size: 1.1rem;                  /* Optional: Adjust font size */
+    font-weight: 600;                   /* Optional: Adjust font weight */
+    text-transform: capitalize;  /* Capitalizes the first letter of each word */
+}
+
+#toggle-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.sidebar-nav {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar-nav li {
+    padding: 15px;
+}
+
+.sidebar-nav li a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-nav li a i {
+    margin-right: 10px;
+}
+
+.logout-btn {
+    width: 55%;
+    margin: 40px;
+    padding: 8px;
+    background: red;
+    border: none;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+}
+
+/* Collapsed Sidebar */
+.sidebar.closed {
+    width: 80px; /* Collapse width */
+}
+
+.sidebar.closed .username,
+.sidebar.closed .nav-text {
+    display: none; /* Hide text but keep icons */
+}
+
+.sidebar.closed .sidebar-nav li a {
+    justify-content: center; /* Center icons */
+}
+
+.sidebar.closed .sidebar-nav li {
+    padding: 10px; /* Adjust padding when collapsed */
+}
+
+#content-wrapper {
+    margin-left: 250px;
+    transition: margin-left 0.3s ease-in-out;
+}
+.sidebar.closed + #content-wrapper {
+    margin-left: 80px; /* Shift content when sidebar is collapsed */
+}
+
+.logout-btn {
+    background: linear-gradient(45deg, #ff416c, #ff4b2b);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.logout-btn i {
+    transition: transform 0.3s ease-in-out;
+}
+
+.logout-btn:hover {
+    background: linear-gradient(45deg, #ff4b2b, #ff416c);
+    box-shadow: 0px 0px 15px rgba(255, 75, 43, 0.6);
+    transform: scale(1.05);
+}
+
+/* .logout-btn:hover i {
+    transform: rotate(360deg);
+} */
+
+.logout-btn:active {
+    transform: scale(0.95);
+}
