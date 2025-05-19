@@ -1,0 +1,77 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM - Home</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap CSS -->
+    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+
+<body>
+    <!-- Back Button -->
+    <a href="{% url 'front' %}" class="btn-back">
+        <i class="fas fa-arrow-left"></i> <!-- Subtle Back Arrow -->
+    </a>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="content-wrapper">
+            <!-- Left Side: Image -->
+            <div class="left-side">
+                <img src="{% static 'img/django-crm-home.png' %}" alt="CRM Illustration" class="img-fluid">
+            </div>
+
+            <!-- Right Side: Card with Buttons -->
+            <div class="right-side">
+                <div class="card shadow-lg p-5">
+                    <h1 class="text-center">Welcome!!</h1>
+                    <p class="text-center text-muted">A powerful CRM solution designed to streamline your workflow and help your business grow effortlessly.</p>
+
+                    <a href="{% url 'register' %}" class="btn btn-signup">
+                        <i class="fas fw fa-user-plus"> Sign Up</i> 
+                    </a>
+
+                    <a href="{% url 'login' %}" class="btn btn-login">
+                        <i class="fas fw fa-sign-in-alt"> Login</i> 
+                    </a>
+                    <hr/>
+
+                    <!-- <a href="{% url 'password_reset' %}" class="btn btn-forgot">
+                        <i class="fas fa-key"></i> Forgot Password
+                    </a> -->
+
+                    {% load socialaccount %}
+
+
+                    <a href="{% provider_login_url 'google' %}" class="btn btn-google">
+                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google Logo">
+                         Login with Google
+                    </a>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/home.js' %}"></script>
+</body>
+
+</html>

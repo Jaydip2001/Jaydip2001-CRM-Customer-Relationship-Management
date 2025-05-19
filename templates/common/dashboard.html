@@ -1,0 +1,567 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+   <div class="d-flex align-items-center justify-content-between mb-4 mt-4">
+    <h1 class="h3 mb-0 custom-title">Dashboard</h1>
+    <div class="search-bar">
+        <form method="get" action="{% url 'dashboard' %}">
+            <div class="input-group">
+                <input type="text" class="form-control search-input" placeholder="Search..." name="q" value="{{ request.GET.q }}">
+                <button class="btn btn-primary search-btn" type="submit"><i class="fas fa-search"></i> <!-- Font Awesome search icon -->
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+    
+        
+    <!-- Search Bar -->
+
+<div class="search-results">
+    {% if no_results %}
+        <div class="alert alert-warning" role="alert">
+            No records found for your search.
+        </div>
+    {% endif %}
+
+     <!-- Displaying Clients Search Results -->
+{% if clients %}
+<h4>Clients</h4>
+<ul>
+    {% for client in clients %}
+        <li>{{ client.name }} - {{ client.email }} - {{client.phone}}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<!-- Displaying Leads Search Results -->
+{% if leads %}
+<h4>Leads</h4>
+<ul>
+    {% for lead in leads %}
+        <li>{{ lead.name }} - {{ lead.email }} - {{lead.phone}} - Status: {{lead.status}}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<!-- Displaying Invoices Search Results -->
+{% if invoices %}
+<h4>Invoices</h4>
+<ul>
+    {% for invoice in invoices %}
+        <li>Invoice #{{ invoice.invoice_number }} - Client: {{ invoice.client.name }} - Amount: ₹{{ invoice.amount }} - Status: {{invoice.status}}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+    <!-- Product Image Carousel with Description in Card -->
+    {% if products %}
+    <div id="productCarousel" class="carousel slide mt-4" data-ride="carousel" data-interval="4800" data-pause="false">
+        <div class="carousel-inner">
+            {% for product in products %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card product-card">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col-md-6">
+                                    <img src="{{ product.image.url }}" class="card-img rounded-left"
+                                    alt="{{ product.name }}" style="height: 250px; object-fit: contain;">
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-primary">{{ product.name }}</h4>
+                                        <p class="card-text text-muted"><strong>In Stock:</strong> {{ product.stock_quantity}}</p>
+                                        <a href="{% url 'product_list'%}" class="btn custom-btn">View More Products</a>
+                                    </div>
+                                </div>
+                                <span class="bestseller-badge">Bestseller</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <!-- <p>No products found.</p> -->
+        {% endif %}
+        </div>
+
+        <!-- Navigation Arrows -->
+        <a class="carousel-control-prev" href="#productCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </a>
+        <a class="carousel-control-next" href="#productCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </a>
+    </div>
+    
+<!-- Custom CSS for Hover Effect -->
+<style>
+    .product-card {
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-img {
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .product-card:hover .card-img {
+        transform: scale(1.05);
+    }
+
+    /* Add a z-index to the carousel */
+    #productCarousel {
+        z-index: 10;
+    }
+
+    /* Prevent overlap */
+    .container-fluid {
+        padding-top: 50px; /* Ensure content doesn't overlap carousel */
+    }
+
+    /* Adjust space around the carousel */
+    .carousel-inner {
+        margin-bottom: 40px; /* Space below carousel */
+    }
+
+    /* Custom button style */
+    .custom-btn {
+        background-color: #7b65f6; /* Change to your preferred color */
+        border-color: #7b65f6;
+        color: white; /* Text color */
+    }
+
+    .custom-btn:hover {
+        background-color: #5d4cbe; /* Darker shade for hover effect */
+        border-color: #5d4cbe;
+    }
+
+    /* Custom CSS for Key Metrics Cards */
+.key-metric-card {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    color: #fff;
+    border-radius: 15px;
+    width: 100%;
+    position: relative; /* To ensure proper positioning */
+}
+
+/* Hover effect with downward shadow */
+.key-metric-card:hover {
+    transform: translateY(-5px); /* Slight lift */
+    box-shadow: 0px 10px 22px rgba(0, 0, 0, 0.1); /* Stronger shadow effect downwards */
+}
+
+/* Specific card backgrounds */
+.clients-card {
+    background: #8987c2;
+}
+
+.leads-card {
+    background: #498496;
+}
+
+.revenue-card {
+    background: #3a6a6b;
+}
+
+/* Icon styles */
+.key-metric-card i {
+    color: #fff;
+    opacity: 0.8;
+}
+
+
+    /* Adjust font and layout for the custom title */
+    .custom-title {
+        font-weight: 600;
+        color: #2c3e50;
+        text-align: center;
+    }
+
+   /* Styling Search Bar */
+.search-bar {
+    width: 300px;
+}
+
+.search-input {
+    border-radius: 20px 0 0 20px;
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.search-input:focus {
+    border-color: #7b65f6;
+    box-shadow: 0px 0px 8px rgba(123, 101, 246, 0.5);
+}
+
+/* Search Button with Icon */
+.search-btn {
+    border-radius: 0 20px 20px 0;
+    padding: 8px 15px;
+    background-color: #7b65f6;
+    border: 1px solid #7b65f6;
+    transition: background 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-btn i {
+    color: white;
+    font-size: 16px;
+}
+
+.search-btn:hover {
+    background-color: #5d4cbe;
+}
+
+/* Bestseller Tag Styling */
+.bestseller-badge {
+    display: inline-block;
+    background-color: #03d42d;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 0 10px 10px 0;
+    text-transform: uppercase;
+}
+
+</style>
+
+
+<br/><br/>
+    <!-- Key Metrics Section -->
+    <div class="row justify-content-center text-center">  <!-- ✅ Centering the cards -->
+        <!-- Total Clients Card -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <a href="{% url 'client_list' %}" class="card-link text-decoration-none">
+                <div class="card shadow h-100 py-3 border-0 rounded-lg key-metric-card clients-card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col mr-2">
+                                <div class="h5 mb-0 font-weight-bold">{{ total_clients }} Clients</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-briefcase fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Total Leads Card -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <a href="{% url 'lead_list' %}" class="card-link text-decoration-none">
+                <div class="card shadow h-100 py-3 border-0 rounded-lg key-metric-card leads-card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col mr-2">
+                                <div class="h5 mb-0 font-weight-bold">{{ total_leads }} Leads</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-users fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Total Revenue Card -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <a href="{% url 'invoice_list' %}" class="card-link text-decoration-none">
+                <div class="card shadow h-100 py-3 border-0 rounded-lg key-metric-card revenue-card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col mr-2">
+                                <div class="h5 mb-0 font-weight-bold">₹ {{ total_revenue }} Revenue</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-rupee-sign fa-3x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div> <!-- End of row -->
+</div>
+<br/>
+    <!-- Sales Chart Section -->
+
+    <div class="container mt-4 text-center">
+        <h3 class="h3 mb-3 custom-title">Daily Growth Analysis</h3>
+        <br/>
+        <div class="row justify-content-center">
+            <div class="col-md-4 d-flex justify-content-center">
+                <canvas id="clientChart"></canvas>
+            </div>
+            <div class="col-md-4 d-flex justify-content-center">
+                <canvas id="leadChart"></canvas>
+            </div>
+            <div class="col-md-4 d-flex justify-content-center">
+                <canvas id="revenueChart"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ✅ Load Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+    /* ✅ Center and Adjust Chart Size */
+    canvas {
+        width: 300px !important;
+        height: 300px !important; /* Adjust this for uniform size */
+    }
+
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 300px;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const clientLabels = JSON.parse('{{ client_growth_labels|safe }}');
+        const clientValues = JSON.parse('{{ client_growth_values|safe }}');
+
+        const leadLabels = JSON.parse('{{ lead_growth_labels|safe }}');
+        const leadValues = JSON.parse('{{ lead_growth_values|safe }}');
+
+        const revenueLabels = JSON.parse('{{ revenue_growth_labels|safe }}');
+        const revenueValues = JSON.parse('{{ revenue_growth_values|safe }}');
+
+        // ✅ Clients Chart
+        new Chart(document.getElementById('clientChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: clientLabels,
+                datasets: [{
+                    label: 'Daily Clients',
+                    data: clientValues,
+                    borderColor: '#4e73df', // Blue color for border
+                    backgroundColor: 'rgba(78, 115, 223, 0.4)', // Light blue for fill
+                    fill: true,
+                    pointRadius: 5,
+                    pointBackgroundColor: '#4e73df', // Blue points
+                    pointHoverRadius: 7,
+                    pointHoverBackgroundColor: '#4e73df',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: "Date"
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)' // Light grid color
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: "New Clients"
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)' // Light grid color
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                        bodyColor: '#fff',
+                        titleColor: '#fff',
+                        footerColor: '#fff',
+                        titleFont: {
+                            size: 14
+                        },
+                        bodyFont: {
+                            size: 12
+                        },
+                    }
+                }
+            }
+        });
+
+        // ✅ Leads Chart
+        new Chart(document.getElementById('leadChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: leadLabels,
+                datasets: [{
+                    label: 'Daily Leads',
+                    data: leadValues,
+                    backgroundColor: 'rgba(75, 192, 192, 0.5)', // Light teal for fill
+                    borderColor: 'rgba(75, 192, 192, 1)', // Teal border
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: "Date"
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)' // Light grid color
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: "New Leads"
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)' // Light grid color
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                        bodyColor: '#fff',
+                        titleColor: '#fff',
+                        footerColor: '#fff',
+                        titleFont: {
+                            size: 14
+                        },
+                        bodyFont: {
+                            size: 12
+                        },
+                    }
+                }
+            }
+        });
+
+        // ✅ Revenue Chart (Pie Chart with Colorful Portions)
+        new Chart(document.getElementById('revenueChart').getContext('2d'), {
+            type: 'pie',
+            data: {
+                labels: revenueLabels,
+                datasets: [{
+                    label: 'Daily Revenue (₹)',
+                    data: revenueValues,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.8)', // Pink
+                        'rgba(54, 162, 235, 0.8)', // Blue
+                        'rgba(255, 206, 86, 0.8)', // Yellow
+                        'rgba(75, 192, 192, 0.8)', // Green
+                        'rgba(153, 102, 255, 0.8)', // Purple
+                        'rgba(255, 159, 64, 0.8)', // Orange
+                        'rgba(255, 99, 71, 0.8)',  // Red
+                    ],
+                    borderColor: 'white', // White border for the segments
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                        bodyColor: '#fff',
+                        titleColor: '#fff',
+                        footerColor: '#fff',
+                        titleFont: {
+                            size: 14
+                        },
+                        bodyFont: {
+                            size: 12
+                        },
+                    },
+                    legend: {
+                        position: 'top', // Place the legend on top
+                        labels: {
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            },
+                            color: '#333'
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+<!-- Custom Styles -->
+<style>
+    /* Apply new font */
+    body {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .custom-title {
+        font-weight: 600;
+        color: #2c3e50; /* Dark Blue */
+        text-align: center;
+    }
+
+    .key-metric-card {
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        color: #fff;
+        border-radius: 15px;
+        width: 100%; /* ✅ Keeping original width */
+    }
+
+    .key-metric-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Unique Background Colors */
+    .clients-card {
+        background: #8987c2;
+    }
+
+    .leads-card {
+        background: #498496;
+    }
+
+    .revenue-card {
+        background: #3a6a6b;
+    }
+
+    /* Icons */
+    .key-metric-card i {
+        color: #fff;
+        opacity: 0.8;
+    }
+</style>
+
+{% endblock content %}

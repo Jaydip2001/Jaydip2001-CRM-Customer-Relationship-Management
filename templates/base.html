@@ -1,0 +1,217 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Customer Management</title>
+
+    <!-- Custom fonts & styles -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+    <script src="{% static 'js/dashboard.js' %}" defer></script>
+
+  <!-- Custom styles for this template-->
+  <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'date-time-phone/jquery-ui.css' %}">
+  <link rel='stylesheet' href="{% static 'date-time-phone/jquery-ui-timepicker-addon.css' %}" />
+</head>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+      <!-- Sidebar - Brand -->
+        <div class="sidebar" id="sidebar">
+          <div class="sidebar-header">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'profile' %}">
+            <img src="{{ user.profile.profile_image.url }}" alt="Profile" class="profile-img">      
+            <span class="username" href="{% url 'profile' %}">{{ user.first_name }} {% if user.last_name %}{{ user.last_name }}{% endif %}</span></a>           
+          </div>
+
+<!-- Pages Collapse Menu -->
+<li class="nav-item">
+  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" 
+     aria-expanded="false" aria-controls="collapsePages">
+    <i class="fas fa-fw fa-folder"></i>
+    <span>Pages</span>
+  </a>
+  <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+    <div class="bg-blue py-2 collapse-inner rounded" style="background-color: #007bff;">
+        <h6 class="collapse-header">Editor Screens:</h6>
+        <a class="collapse-item" href="{% url 'client_list' %}" style="color: rgb(0, 0, 0); text-decoration: none;">Client List</a>
+        <a class="collapse-item" href="{% url 'lead_list' %}" style="color: rgb(0, 0, 0); text-decoration: none;">Lead List</a>
+        <a class="collapse-item" href="{% url 'invoice_list' %}" style="color: rgb(0, 0, 0); text-decoration: none;">Invoice List</a>
+    </div>
+  </div>
+</li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'dashboard' %}">
+         <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Dashboard</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'task_list' %}">
+            <i class="fas fa-fw fa-calendar-alt"></i>
+            <span>Task Management</span>
+        </a>
+    </li>
+
+    <!-- Product Management Section -->
+<li class="nav-item">
+  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProductManagement" 
+     aria-expanded="false" aria-controls="collapseProductManagement">
+    <i class="fas fa-fw fa-cogs"></i>  <!-- Icon for Product Management -->
+    <span>Product Management</span>
+  </a>
+  <div id="collapseProductManagement" class="collapse" aria-labelledby="headingProductManagement" data-parent="#accordionSidebar">
+    <div class="bg-blue py-2 collapse-inner rounded" style="background-color: #007bff;">
+        <h6 class="collapse-header" style="color: white;">Product Management:</h6>
+        <!-- Link to view products list -->
+        <a class="collapse-item" href="{% url 'product_list' %}" style="color: rgb(0, 0, 0); text-decoration: none;">Product List</a>
+        <!-- Link to create/edit products -->
+        <a class="collapse-item" href="{% url 'product_create' %}" style="color: rgb(0, 0, 0); text-decoration: none;">Manage Product</a>
+    </div>
+  </div>
+</li>
+    
+
+      <!-- Nav Item - Companies -->
+      <!-- <li class="nav-item">
+        <a class="nav-link" href="#">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Companies</span></a>
+      </li> -->
+
+      <!-- Nav Item - Contact -->
+      <!-- <li class="nav-item">
+        <a class="nav-link" href="#">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Contact</span></a>
+      </li> -->
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <!-- Nav Item - Profile -->
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'profile-update' %}">
+          <i class="fa fa-fw fa-user"></i>
+          <span>Update my Profile</span></a>
+      </li>
+      <!-- Nav Item - change_password -->
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'change_password' %}">
+          <i class="fas fa-fw fa-key"></i>
+          <span>Change Password</span></a>
+      </li>
+      <!-- Nav Item - Forget Password -->
+      <!-- <li class="nav-item">
+        <a class="nav-link" href="#">
+          <i class="fas fa-fw fa-user"></i>
+          <span>Forget Password</span></a>
+      </li> -->
+
+      <!-- Nav Item - Logout -->
+      <li class="nav-item">
+        <form id="logout-form" method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="logout-btn">
+                <i class="fas fa-fw fa-power-off"></i> Logout
+            </button>
+        </form>
+    </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
+
+    </ul>
+  </div>
+    <!-- End of Sidebar -->
+
+   
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+        {% include 'common/messages.html' %}
+
+        {% block content %}  {% endblock content %}
+               
+
+        
+      </div>
+      <!-- End of Main Content -->
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+          <div class="container my-auto">
+              <div class="copyright text-center my-auto">
+                  <span>Copyright &copy; CRM-django 2025</span>
+              </div>
+          </div>
+      </footer>
+      <!-- End of Footer -->
+
+    
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+  {% block script %}  {% endblock script %}
+
+<!-- Script Inclusion -->
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+<script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+
+<script src="{% static 'date-time-phone/jquery-ui.js' %}"></script>
+<script src="{% static 'date-time-phone/jquery-ui-timepicker-addon.js' %}"></script> 
+
+  <script>
+    $(function() {
+        // Initialize datepicker for fields like date_issued and due_date
+        $("#id_date_issued, #id_due_date, #id_birth_date").datepicker({
+            dateFormat: 'yy-mm-dd',  // Set date format to YYYY-MM-DD
+            // minDate: 0,              // Disables past dates (only allows today or future dates)
+            changeMonth: true,       // Enable month dropdown
+            changeYear: true,         // Enable year dropdown
+            yearRange: "1900:" + new Date().getFullYear()
+          }).attr("autocomplete", "off");
+    });
+  </script>
+
+  <script src="{% static 'date-time-phone/jquery-input-mask-phone-number.min.js' %}"></script>
+
+  <script>
+    // Phone number format (xxx) xxx-xxxx
+    $(document).ready(function () {
+        $('#id_phone_number').usPhoneFormat({
+            format: '(xxx) xxx-xxxx',
+        });   
+    });
+  </script>
+
+</body>
+</html>

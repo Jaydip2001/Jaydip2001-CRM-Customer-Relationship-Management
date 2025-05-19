@@ -1,0 +1,81 @@
+{% load static %}
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django CRM - Login</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+
+<body>
+    <!-- Background
+    <div class="background-overlay"></div> -->
+
+    <!-- Back Button -->
+    <a href="{% url 'home' %}" class="back-button">
+        <i class="fas fa-arrow-left"></i> Back
+    </a>
+
+    <!-- Main Container -->
+    <div class="login-wrapper">
+        <!-- Left Side: Illustration -->
+        <div class="login-illustration">
+            <img src="{% static 'img/man.png' %}" alt="Login Illustration">
+            <p>Unlock the full experience—log in to access everything made just for you!</p>
+        </div>
+
+        <!-- Right Side: Login Form -->
+        <div class="login-form">
+            <h1 class="greeting" id="greeting-text">Hello!</h1>
+
+            <p class="subtitle">Login to your account</p>
+
+            <form method="POST">
+                {% csrf_token %}
+                
+                {% for field in form %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        <div class="password-wrapper">
+                            {{ field }}
+                            {% if field.field.widget.input_type == "password" %}
+                                <button type="button" class="toggle-password">
+                                    <i class="fas fa-eye-slash"></i> <!-- Initially closed eye -->
+                                </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            
+                <button type="submit" class="btn-login">Login</button>
+            </form>
+
+            <div class="links">
+                <a href="{% url 'password_reset' %}">Forgot Password?</a>
+                <a href="{% url 'register' %}">Create an Account</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/login.js' %}"></script>
+</body>
+
+</html>

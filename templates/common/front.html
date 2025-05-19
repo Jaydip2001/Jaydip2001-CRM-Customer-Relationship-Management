@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Small Business CRM</title>
+
+    <!-- Bootstrap & External Styles -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #dde9ff, #c2e9fb);
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(255, 255, 255, 0.6) !important;
+            backdrop-filter: blur(10px);
+            padding: 15px 50px;
+            transition: background 0.3s ease-in-out;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar:hover {
+            background: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            color: #0056b3 !important;
+            font-size: 1.8rem;
+            padding-right: 40px;
+        }
+
+        .navbar-brand:hover {
+            color: #003b80 !important;
+        }
+
+        .navbar-nav .nav-link {
+            color: #333 !important;
+            font-weight: 500;
+            gap: 70px;
+            font-size: 1.1rem;
+            padding: 8px 20px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #0056b3 !important;
+        }
+
+        .navbar-nav .btn-custom {
+            background: #0056b3;
+            color: white;
+            padding: 10px 30px;
+            font-size: 1.2rem;
+            border-radius: 30px;
+            border: none;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .navbar-nav .btn-custom:hover {
+            background: #003b80;
+            transform: scale(1.05);
+        }
+
+        /* Hero Section (Front Page) */
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 80px 120px;
+            text-align: left;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            max-width: 550px;
+            opacity: 0;
+            animation: fadeInUp 1.5s ease-in-out forwards;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #002b5b;
+            padding-top: 90px;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #444;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        /* Hero Image */
+        .hero img {
+            max-width: 5000px; /* Adjust size of image */
+            /* opacity: 0.7; Optional transparency for image */
+            position: absolute;
+            right: 65px;
+            top: 75%;
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+
+        /* Buttons */
+        .btn-custom {
+            background: #0056b3;
+            color: white;
+            padding: 14px 30px;
+            font-size: 1.3rem;
+            border-radius: 30px;
+            border: none;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-custom:hover {
+            background: #003b80;
+            transform: scale(1.05);
+        }
+
+        /* Sections (Hidden by Default) */
+        .section {
+            padding: 100px 120px;
+            display: none;
+        }
+
+        .section h2 {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #002b5b;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .section p {
+            font-size: 1rem;
+            color: #444;
+            max-width: 1400px;
+            margin: 20px;;
+            line-height: 1.8;
+            text-align: left;
+        }
+
+       /* Contact Section */
+.contact-info {
+    background: #fff;
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 20px auto;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 12px;
+    padding: 12px 0;
+    color: #333;
+    border-bottom: 1px solid #eee;
+}
+
+.contact-item:last-child {
+    border-bottom: none;
+}
+
+.contact-item i {
+    font-size: 1.5rem;
+    color: #0056b3;
+}
+
+.contact-info strong {
+    color: #0056b3;
+}
+
+/* Social Links */
+.social-links {
+    margin-top: 15px;
+}
+
+.social-links a {
+    display: inline-block;
+    margin: 0 10px;
+    font-size: 1.5rem;
+    color: #0056b3;
+    transition: color 0.3s ease-in-out;
+}
+
+.social-links a:hover {
+    color: #003b80;
+}
+
+
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Transparent Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <a class="navbar-brand" href="{% url 'front' %}">CRM</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('about')">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('features')">Features</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('contact')">Contact</a></li>
+                <li class="nav-item"><a class="btn btn-custom ml-3" href="{% url 'login' %}">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section (Front Page) -->
+    {% if request.path == '/' %}
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Our CRM</h1>
+            <p>Manage your customers efficiently with our powerful CRM solution designed for small businesses.</p>
+            <a href="{% url 'home' %}" class="btn btn-custom">Get Started</a>
+        </div>
+        <!-- Add your PNG image here -->
+        <img src="{% static 'img/CRM-image.png' %}" alt="CRM Image">
+    </div>
+    {% endif %}
+
+    <!-- Sections (Hidden by Default) -->
+    <section id="about" class="section">
+        <h2>About Our CRM</h2>
+        <p>At Small Business CRM, we are committed to empowering offline vendors and small businesses with a seamless, efficient, and intuitive customer relationship management solution. In an increasingly digital world, managing customer interactions, sales, and business operations manually can be time-consuming and challenging. Our CRM platform is specifically designed to address these challenges, enabling small business owners to streamline their processes, enhance customer engagement, and drive growth with ease.
+
+            Our solution provides a user-friendly interface that allows businesses to store and manage customer data, track purchase history, schedule follow-ups, and generate insightful reports—all in one place. Unlike traditional CRM systems built for large enterprises, our platform is lightweight, cost-effective, and tailored to the unique needs of retailers, wholesalers, service providers, and other local businesses.
+            
+            We understand that small business owners value simplicity and efficiency. That’s why our CRM is designed to be easy to implement, requiring no technical expertise, ensuring that you can focus on growing your business while we handle the complexities of customer management. By leveraging our solution, you can enhance customer relationships, improve retention, and optimize your business operations with minimal effort.
+            
+            At Small Business CRM, our mission is to provide small businesses with the tools they need to thrive in today’s competitive landscape. We are committed to innovation, reliability, and exceptional support, helping businesses transition smoothly into a more organized and data-driven approach to customer management.
+            
+            Experience the future of small business management—simplified, efficient, and built for growth.</p>
+    </section>
+
+    <section id="features" class="section">
+        <h2>Key Features</h2>
+          <p> <b> ✔ Lead Tracking:- </b>
+Efficient lead management is crucial for business growth. Our CRM provides a centralized system to capture, track, and nurture leads from various sources, ensuring that no potential customer is lost. Businesses can categorize leads, assign priorities, and set follow-up reminders to improve conversion rates. With an intuitive dashboard, you can monitor lead progress, track communication history, and move prospects seamlessly through the sales pipeline.</p>
+
+<p> <b> ✔ Automated Sales:- </b>
+Streamline your sales process with automation tools that reduce manual effort and improve efficiency. From automated follow-ups and deal tracking to customized sales workflows, our CRM ensures that sales teams can focus on closing deals rather than administrative tasks. Automate repetitive actions such as sending invoices, updating sales statuses, and scheduling meetings, helping businesses increase productivity and revenue.</p>
+
+<p> <b> ✔ Customer Support:- </b>
+Providing excellent customer service is key to long-term success. Our integrated customer support tools help businesses manage inquiries, complaints, and service requests efficiently. With features like ticket management, automated responses, and real-time communication tracking, businesses can ensure prompt and professional support. Additionally, a centralized customer history enables businesses to personalize interactions, improving customer satisfaction and loyalty.</p>
+
+<p> <b> ✔ Analytics & Reporting:- </b>
+Data-driven decision-making is essential for business success. Our built-in analytics tools provide real-time insights into sales performance, customer behavior, and operational efficiency. Generate detailed reports on lead conversion rates, revenue trends, and customer engagement metrics to identify areas for improvement. With visual dashboards and predictive analytics, businesses can make informed decisions that drive growth and profitability.
+        </p>
+    </section>
+
+    <section id="contact" class="section">
+        <h2 class="text-center mb-4">Contact Us</h2>
+        <div class="contact-info p-4">
+            <div class="contact-item d-flex align-items-center">
+                <i class="fas fa-envelope"></i>
+                <p class="ml-3"><strong>Email:</strong> esfinatechnology@proton.me</p>
+            </div>
+            <div class="contact-item d-flex align-items-center">
+                <i class="fas fa-phone"></i>
+                <p class="ml-3"><strong>Phone:</strong> +91 7069989395 & +91 9974168085</p>
+            </div>
+            <div class="contact-item d-flex align-items-center">
+                <i class="fas fa-map-marker-alt"></i>
+                <p class="ml-3"><strong>Office:</strong> Patan, Gujarat-384265</p>
+            </div>
+            <!-- Social Media Links -->
+            <div class="text-center mt-3">
+                <a href="https://www.linkedin.com/in/rahiltrivedi138?" class="btn btn-primary btn-m"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.instagram.com/rahiltrivedi.xiii?utm_source=qr&igsh=MXZpNjRqd29yNmg4NQ==" class="btn btn-danger btn-m"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </section>
+    
+    
+    
+
+    <!-- JavaScript for Section Visibility -->
+    <script>
+        // Initially show the home page content (with hero section)
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll(".section").forEach(section => section.style.display = "none");
+
+            // Hide hero section if we're not on the front page
+            document.querySelector(".hero").style.display = "none";
+            
+            // Show the clicked section
+            document.getElementById(sectionId).style.display = "block";
+        }
+
+        // Show home section on page load (default)
+        if (window.location.pathname === "/") {
+            document.querySelector(".hero").style.display = "flex";
+        }
+    </script>
+
+</body>
+</html>
